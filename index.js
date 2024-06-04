@@ -36,8 +36,8 @@ app.use(errorHanlder);
 
 const httpsServer = https.createServer(
   {
-    key: fs.readFileSync("/etc/letsencrypt/live/my_api_url/privkey.pem"),
-    cert: fs.readFileSync("/etc/letsencrypt/live/my_api_url/fullchain.pem"),
+    key: fs.readFileSync("/etc/letsencrypt/live/4rst.com/privkey.pem"),
+    cert: fs.readFileSync("/etc/letsencrypt/live/4rst.com/fullchain.pem"),
   },
   app
 );
