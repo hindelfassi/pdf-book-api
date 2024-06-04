@@ -48,6 +48,27 @@ const getAllBooks = asyncHandler(async (req, res) => {
  *  @method  GET
  *  @access  public
  */
+const getBookByFileID = asyncHandler(async (req, res) => {
+  const { fileID } = req.params; // Destructure fileID from req.params
+
+  try {
+    const book = await Book.findOne({ fileID }); // Use findOne for efficiency
+
+    if (book) {
+      res.status(200).json(book);
+    } else {
+      res.status(404).json({ message: "Book not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+/**
+ *  @desc    Get Book BY ID
+ *  @route   /api/v1/books/:id
+ *  @method  GET
+ *  @access  public
+ */
 const getBookByID = asyncHandler(async (req, res) => {
   const book = await Book.findById(req.params.id);
   if (book) {
@@ -118,4 +139,5 @@ module.exports = {
   getBookByID,
   updateBook,
   deleteBook,
+  getBookByFileID,
 };

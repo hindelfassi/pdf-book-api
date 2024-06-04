@@ -5,6 +5,7 @@ const {
   getBookByID,
   updateBook,
   deleteBook,
+  getBookByFileID,
 } = require("../controllers/bookController"); // Assuming your controller is called bookController
 const {
   verifyTokenAndAdmin,
@@ -21,4 +22,5 @@ router
   .put(verifyTokenAndAdmin, updateBook) // Only admins can update books
   .delete(verifyTokenAndAdmin, deleteBook); // Only admins can delete books
 
+router.route("/fileid/:fileID").get(getBookByFileID);
 module.exports = router;
