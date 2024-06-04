@@ -1,4 +1,6 @@
 const express = require("express");
+const fs = require("fs");
+const https = require("https");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const Logger = require("./src/middleware/LoggerMiddleware");
@@ -31,6 +33,18 @@ app.use("/api/v1/books", bookPath); // Mount the book routes
 // Error Handler Middleware
 app.use(notFound);
 app.use(errorHanlder);
+
+const httpsServer = https.createServer(
+  {
+    key: fs.readFileSync("/etc/letsencrypt/live/my_api_url/privkey.pem"),
+    cert: fs.readFileSync("/etc/letsencrypt/live/my_api_url/fullchain.pem"),
+  },
+  app
+);
+
+httpsServer.listen(443, () => {
+  console.log("HTTPS Server running on port 443");
+});
 
 // Server running
 app.listen(PORT, () => {
