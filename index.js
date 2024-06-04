@@ -1,16 +1,16 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
-const Logger = require("./middleware/LoggerMiddleware");
-const { notFound, errorHanlder } = require("./middleware/errorsMiddleware");
+const Logger = require("./src/middleware/LoggerMiddleware");
+const { notFound, errorHanlder } = require("./src/middleware/errorsMiddleware");
 const cors = require("cors");
-const bookPath = require("./routes/books"); // Import the book routes
+const bookPath = require("./src/routes/books"); // Import the book routes
 
 // app init
 dotenv.config();
 const app = express();
 
-const connectToDB = require("./database/config");
+const connectToDB = require("./src/database/config");
 
 // Cors Policy
 app.use(cors());
