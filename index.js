@@ -6,7 +6,6 @@ const bodyParser = require("body-parser");
 const Logger = require("./src/middleware/LoggerMiddleware");
 const { notFound, errorHanlder } = require("./src/middleware/errorsMiddleware");
 const cors = require("cors");
-const bookPath = require("./src/routes/books"); // Import the book routes
 
 // app init
 dotenv.config();
@@ -22,22 +21,32 @@ app.use(bodyParser.json());
 connectToDB();
 
 // Middlewares
-app.use(express.json());
 app.use(Logger);
 
 const PORT = process.env.PORT || 8000;
 
-// Routes
-app.use("/api/v1/books", bookPath); // Mount the book routes
+// Define the book routes (example)
+const bookRouter = express.Router();
+
+bookRouter.get("/", (req, res) => {
+  res.send("Welcome to the book API!");
+});
+
+// ... more book routes here ...
+
+app.use("/api/v1/books", bookRouter); // Mount the book routes
 
 // Error Handler Middleware
 app.use(notFound);
 app.use(errorHanlder);
 
+// HTTPS Server Configuration (using environment variables)
+const privateKey = fs.readFileSync(process.env.HTTPS_PRIVATE_KEY);
+const certificate = fs.readFileSync(process.env.HTTPS_CERTIFICATE);
 const httpsServer = https.createServer(
   {
-    key: fs.readFileSync("/etc/letsencrypt/live/4rst.com/privkey.pem"),
-    cert: fs.readFileSync("/etc/letsencrypt/live/4rst.com/fullchain.pem"),
+    key: privateKey,
+    cert: certificate,
   },
   app
 );
